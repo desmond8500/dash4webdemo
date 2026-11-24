@@ -20,6 +20,9 @@ export const router = createRouter({
       component: () => import('@/components/GameShell.vue'),
       children: [
         { path: '', name: 'hq', component: () => import('@/views/HqView.vue'), meta: { title: 'QG' } },
+        { path: 'clients', name: 'clients', component: () => import('@/views/ClientsView.vue'), meta: { title: 'Alliés' } },
+        { path: 'demandes', name: 'client-requests', component: () => import('@/views/RequestsView.vue'), meta: { title: 'Signaux entrants' } },
+        { path: 'devis', name: 'quotes', component: () => import('@/views/QuotesView.vue'), meta: { title: 'Parchemins' } },
         { path: 'taches', name: 'missions', component: () => import('@/views/MissionsView.vue'), meta: { title: 'Missions' } },
         { path: 'projets', name: 'sites', component: () => import('@/views/SitesView.vue'), meta: { title: 'Chantiers' } },
         { path: 'stock', name: 'inventory', component: () => import('@/views/InventoryView.vue'), meta: { title: 'Inventaire' } },

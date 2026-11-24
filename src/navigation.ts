@@ -25,15 +25,15 @@ export interface NavItem {
 
 export const NAV: NavItem[] = [
   { name: 'hq', label: 'Tableau de bord', nickname: 'QG', icon: '🛰️', accent: 'var(--primary)', permissions: ['dashboard.view', 'dashboard.view.own'], webPath: '/', ready: true, tab: true },
-  { name: 'clients', label: 'Clients', icon: '🏢', accent: 'var(--info)', permissions: ['clients.view', 'clients.view.own'], webPath: '/clients', ready: false },
-  { name: 'client-requests', label: 'Demandes', icon: '📨', accent: 'var(--info)', permissions: ['client_requests.view', 'client_requests.view.own'], webPath: '/demandes', ready: false },
+  { name: 'clients', label: 'Clients', nickname: 'Alliés', icon: '🏢', accent: 'var(--info)', permissions: ['clients.view', 'clients.view.own'], webPath: '/clients', ready: true },
+  { name: 'client-requests', label: 'Demandes', nickname: 'Signaux', icon: '📨', accent: 'var(--info)', permissions: ['client_requests.view', 'client_requests.view.own'], webPath: '/demandes', ready: true },
   { name: 'sites', label: 'Projets', nickname: 'Chantiers', icon: '🏗️', accent: 'var(--orange)', permissions: ['projects.view', 'projects.view.own'], webPath: '/projets', ready: true, tab: true },
   { name: 'messages', label: 'Messages', icon: '💬', accent: 'var(--info)', permissions: [], webPath: '/messages', ready: false },
   { name: 'missions', label: 'Tâches', nickname: 'Missions', icon: '🎯', accent: 'var(--amber)', permissions: ['tasks.view', 'tasks.view.own'], webPath: '/taches', ready: true, tab: true },
   { name: 'planning', label: 'Planning', icon: '🗓️', accent: 'var(--amber)', permissions: ['tasks.view', 'tasks.view.own'], webPath: '/planning', ready: false },
   { name: 'journals', label: 'Journaux', icon: '📖', accent: 'var(--amber)', permissions: ['journals.view', 'journals.view.own'], webPath: '/journaux', ready: false },
   { name: 'tech-space', label: 'Espace technicien', icon: '🔑', accent: 'var(--amber)', permissions: ['tech_shares.view', 'tech_shares.view.own', 'tech_access_requests.view', 'tech_access_requests.view.own'], webPath: '/espace-technicien', ready: false },
-  { name: 'quotes', label: 'Devis', icon: '📜', accent: 'var(--help)', permissions: ['quotes.view', 'quotes.view.own'], webPath: '/devis', ready: false },
+  { name: 'quotes', label: 'Devis', nickname: 'Parchemins', icon: '📜', accent: 'var(--help)', permissions: ['quotes.view', 'quotes.view.own'], webPath: '/devis', ready: true },
   { name: 'invoices', label: 'Factures', icon: '🧾', accent: 'var(--help)', permissions: ['invoices.view'], webPath: '/factures', ready: false },
   { name: 'schedule', label: 'Échéancier', icon: '⏳', accent: 'var(--help)', permissions: ['invoices.view'], webPath: '/echeancier', ready: false },
   { name: 'contracts', label: 'Contrats', icon: '🤝', accent: 'var(--help)', permissions: ['contracts.view'], webPath: '/contrats', ready: false },

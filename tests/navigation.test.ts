@@ -13,6 +13,9 @@ describe('navigation', () => {
 
   it('envoie vers l’écran refait ou vers la page d’attente', () => {
     expect(navTarget(NAV.find((n) => n.name === 'inventory')!)).toEqual({ name: 'inventory' })
-    expect(navTarget(NAV.find((n) => n.name === 'quotes')!)).toEqual({ name: 'module', params: { screen: 'quotes' } })
+    expect(navTarget(NAV.find((n) => n.name === 'quotes')!)).toEqual({ name: 'quotes' })
+    expect(navTarget(NAV.find((n) => n.name === 'invoices')!)).toEqual({ name: 'module', params: { screen: 'invoices' } })
+    // Chaque écran refait a sa route
+    expect(NAV.filter((n) => n.ready).map((n) => n.name)).toEqual(['hq', 'clients', 'client-requests', 'sites', 'missions', 'quotes', 'inventory', 'armory', 'garage'])
   })
 })
