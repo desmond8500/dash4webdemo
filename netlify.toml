@@ -1,0 +1,22 @@
+[build]
+  # Netlify garde node_modules en cache : on reprend toujours la dernière version de @dash4/shared (main)
+  command = "npm install --no-save --no-audit --no-fund github:desmond8500/dash4-shared#main && npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "24"
+  # Adresse de l’API (pas un secret). La maquette ne fait que lire : compte « Lecture seule ».
+  VITE_API_URL = "https://api.dash4.yonkou.info/api"
+
+# Application monopage : toutes les routes renvoient index.html
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
