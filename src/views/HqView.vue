@@ -44,10 +44,10 @@ const sites = computed(() => widgets.value?.sites?.items ?? [])
       <div v-for="i in 4" :key="i" class="skeleton" />
     </div>
     <div v-else class="grid" style="--min: 240px">
-      <StatTile v-if="widgets?.my_tasks" class="appear" style="--i: 0" icon="🎯" label="Missions en cours" :value="widgets.my_tasks.open" accent="var(--gold)" :hint="widgets.my_tasks.overdue ? `${widgets.my_tasks.overdue} en retard` : `${widgets.my_tasks.today} aujourd'hui`" :alert="widgets.my_tasks.overdue > 0" to="/missions" />
+      <StatTile v-if="widgets?.my_tasks" class="appear" style="--i: 0" icon="🎯" label="Missions en cours" :value="widgets.my_tasks.open" accent="var(--gold)" :hint="widgets.my_tasks.overdue ? `${widgets.my_tasks.overdue} en retard` : `${widgets.my_tasks.today} aujourd'hui`" :alert="widgets.my_tasks.overdue > 0" to="/taches" />
       <StatTile v-if="widgets?.client_requests" class="appear" style="--i: 1" icon="📨" label="Demandes à traiter" :value="widgets.client_requests.open" accent="var(--cyan)" :hint="widgets.client_requests.late ? `${widgets.client_requests.late} en retard` : `${widgets.client_requests.new} nouvelles`" :alert="widgets.client_requests.late > 0" />
-      <StatTile v-if="widgets?.stock" class="appear" style="--i: 2" icon="🎒" label="Objets en stock bas" :value="widgets.stock.low" accent="var(--violet)" :alert="widgets.stock.low > 0" to="/inventaire" />
-      <StatTile v-if="tools.length" class="appear" style="--i: 3" icon="🛠️" label="Outils sortis" :value="armory.lent" accent="var(--green)" :hint="armory.late ? `${armory.late} en retard` : `${armory.available} disponibles`" :alert="armory.late > 0" to="/armurerie" />
+      <StatTile v-if="widgets?.stock" class="appear" style="--i: 2" icon="🎒" label="Objets en stock bas" :value="widgets.stock.low" accent="var(--violet)" :alert="widgets.stock.low > 0" to="/stock" />
+      <StatTile v-if="tools.length" class="appear" style="--i: 3" icon="🛠️" label="Outils sortis" :value="armory.lent" accent="var(--green)" :hint="armory.late ? `${armory.late} en retard` : `${armory.available} disponibles`" :alert="armory.late > 0" to="/stock/outillage" />
       <StatTile v-if="widgets?.quotes" class="appear" style="--i: 4" icon="📜" label="Devis envoyés" :value="widgets.quotes.sent" accent="var(--orange)" :hint="`${widgets.quotes.accepted_this_month} acceptés ce mois`" />
       <StatTile v-if="widgets?.team_tasks" class="appear" style="--i: 5" icon="🧑‍🤝‍🧑" label="Missions de l'équipe" :value="widgets.team_tasks.open" accent="var(--pink)" :hint="widgets.team_tasks.blocked ? `${widgets.team_tasks.blocked} bloquées` : `${widgets.team_tasks.unassigned} sans équipier`" />
     </div>
@@ -86,7 +86,7 @@ const sites = computed(() => widgets.value?.sites?.items ?? [])
   justify-content: space-between;
   margin-bottom: 1rem;
   background:
-    linear-gradient(120deg, rgb(34 211 238 / 0.18), rgb(167 139 250 / 0.18)),
+    linear-gradient(120deg, rgb(16 185 129 / 0.25), rgb(56 189 248 / 0.2)),
     var(--panel);
 }
 .welcome p {
@@ -95,7 +95,7 @@ const sites = computed(() => widgets.value?.sites?.items ?? [])
 .welcome h1 {
   font-size: clamp(1.6rem, 4vw, 2.4rem);
   color: var(--text);
-  text-shadow: 0 0 20px rgb(34 211 238 / 0.5);
+  text-shadow: 0 0 20px rgb(52 211 153 / 0.6);
 }
 .emblem {
   font-size: 4rem;

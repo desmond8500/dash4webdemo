@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { ApiError } from '@dash4/shared'
-import { login } from '@/services/session'
+import { ApiError, isTechnician } from '@dash4/shared'
+import { login, logout, session } from '@/services/session'
 import { blip } from '@/utils/sound'
 
 /** Écran de connexion « Appuyez sur Start » : compte Dash4 (de préférence le compte « Lecture seule »). */
@@ -18,6 +18,13 @@ async function submit(): Promise<void> {
   busy.value = true
   try {
     await login(email.value.trim(), password.value)
+    // Comme dash4-web : réservé aux comptes gestionnaires, les techniciens utilisent l'application mobile
+    if (isTechnician(session.user)) {
+      await logout()
+      blip('error')
+      error.value = "Ce QG est réservé aux comptes gestionnaires. Utilisez l'application mobile Dash4."
+      return
+    }
     blip('open')
     void router.replace(typeof route.query.retour === 'string' ? route.query.retour : { name: 'hq' })
   } catch (e) {
@@ -34,7 +41,7 @@ async function submit(): Promise<void> {
     <form class="panel card appear" aria-labelledby="login-title" @submit.prevent="submit">
       <div class="logo" aria-hidden="true">◆</div>
       <h1 id="login-title" class="display">Dash4 <span>QG</span></h1>
-      <p class="muted">Maquette de démonstration — lecture seule</p>
+      <p class="muted">Connectez-vous avec votre compte Dash4</p>
       <label for="email">E-mail</label>
       <input id="email" v-model="email" class="input" type="email" autocomplete="username" required />
       <label for="password">Mot de passe</label>

@@ -4,7 +4,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { isReadOnly } from '@dash4/shared'
 import { logout, session, userCanAny } from '@/services/session'
 import { loadPlayer, player } from '@/services/player'
-import { visibleNav } from '@/navigation'
+import { navTarget, visibleNav, type NavItem } from '@/navigation'
 import { blip } from '@/utils/sound'
 import GameGauge from './GameGauge.vue'
 import SettingsDialog from './SettingsDialog.vue'
@@ -16,6 +16,9 @@ import SettingsDialog from './SettingsDialog.vue'
 const route = useRoute()
 const router = useRouter()
 const nav = computed(() => visibleNav(userCanAny))
+/** Barre d'onglets du téléphone : les écrans principaux, puis « Menu » pour tout le reste. */
+const tabs = computed(() => nav.value.filter((n) => n.tab))
+const isCurrent = (item: NavItem) => (item.ready ? route.name === item.name : route.name === 'module' && route.params.screen === item.name)
 const settingsOpen = ref(false)
 const initials = computed(() => (session.user ? `${session.user.firstname[0] ?? ''}${session.user.lastname[0] ?? ''}`.toUpperCase() : ''))
 onMounted(loadPlayer)
@@ -35,14 +38,15 @@ async function quit(): Promise<void> {
         <RouterLink
           v-for="item in nav"
           :key="item.name"
-          :to="{ name: item.name }"
+          :to="navTarget(item)"
           class="nav-link"
+          :class="{ later: !item.ready }"
           :style="{ '--accent': item.accent }"
-          :aria-current="route.name === item.name ? 'page' : undefined"
+          :aria-current="isCurrent(item) ? 'page' : undefined"
           @click="blip('select')"
         >
           <span class="nav-icon" aria-hidden="true">{{ item.icon }}</span>
-          <span>{{ item.label }}</span>
+          <span class="nav-text">{{ item.label }}<small v-if="item.nickname" class="nick">{{ item.nickname }}</small></span>
         </RouterLink>
       </nav>
     </aside>
@@ -59,7 +63,7 @@ async function quit(): Promise<void> {
           <span class="muted small">{{ player.level.title }} · niveau {{ player.level.level }}</span>
           <GameGauge class="xp" :value="player.level.progress" label="Expérience" tone="xp" :text="`${player.level.inLevel} / ${player.level.needed} XP`" />
         </div>
-        <span v-if="isReadOnly(session.user)" class="badge" style="--tone: var(--gold)">Démo · lecture seule</span>
+        <span v-if="isReadOnly(session.user)" class="badge" style="--tone: var(--amber)">Lecture seule</span>
         <button type="button" class="btn icon-btn" aria-label="Réglages d'affichage et d'accessibilité" @click="(settingsOpen = true), blip('open')">⚙️</button>
         <button type="button" class="btn icon-btn" aria-label="Se déconnecter" @click="quit">⏻</button>
       </header>
@@ -73,16 +77,20 @@ async function quit(): Promise<void> {
 
     <nav class="tabbar panel" aria-label="Navigation">
       <RouterLink
-        v-for="item in nav"
+        v-for="item in tabs"
         :key="item.name"
-        :to="{ name: item.name }"
+        :to="navTarget(item)"
         class="tab"
         :style="{ '--accent': item.accent }"
-        :aria-current="route.name === item.name ? 'page' : undefined"
+        :aria-current="isCurrent(item) ? 'page' : undefined"
         @click="blip('select')"
       >
         <span class="nav-icon" aria-hidden="true">{{ item.icon }}</span>
-        <span class="tab-label">{{ item.label }}</span>
+        <span class="tab-label">{{ item.nickname ?? item.label }}</span>
+      </RouterLink>
+      <RouterLink :to="{ name: 'menu' }" class="tab" style="--accent: var(--info)" :aria-current="route.name === 'menu' ? 'page' : undefined" @click="blip('select')">
+        <span class="nav-icon" aria-hidden="true">🧭</span>
+        <span class="tab-label">Menu</span>
       </RouterLink>
     </nav>
 
@@ -105,21 +113,23 @@ async function quit(): Promise<void> {
   display: flex;
   flex-direction: column;
   gap: 1rem;
+  max-height: calc(100vh - 2rem);
   min-height: calc(100vh - 2rem);
 }
 .brand {
   font-weight: 900;
   font-size: 1.3rem;
   color: var(--cyan);
-  text-shadow: 0 0 14px rgb(34 211 238 / 0.6);
+  text-shadow: 0 0 14px rgb(52 211 153 / 0.7);
 }
 .brand small {
   color: var(--violet);
 }
-nav {
+.side nav {
   display: flex;
   flex-direction: column;
   gap: 0.35rem;
+  overflow-y: auto;
 }
 .nav-link {
   display: flex;
@@ -146,6 +156,22 @@ nav {
 .nav-icon {
   font-size: 1.4rem;
 }
+.nav-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.15;
+}
+.nick {
+  font-size: 0.7rem;
+  color: var(--accent);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.nav-link.later {
+  color: var(--muted);
+}
+
 .main-col {
   min-width: 0;
   display: flex;
@@ -169,9 +195,9 @@ nav {
   display: grid;
   place-items: center;
   font-weight: 900;
-  background: linear-gradient(135deg, var(--cyan), var(--violet));
-  color: #0b1020;
-  box-shadow: 0 0 18px rgb(167 139 250 / 0.5);
+  background: linear-gradient(135deg, var(--primary-soft), var(--primary-strong));
+  color: #022c22;
+  box-shadow: 0 0 18px rgb(52 211 153 / 0.55);
 }
 .avatar img {
   width: 100%;

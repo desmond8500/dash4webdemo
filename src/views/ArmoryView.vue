@@ -69,7 +69,7 @@ const filters = computed(() => [
 }
 .seg[aria-checked='true'] {
   background: linear-gradient(135deg, var(--green), var(--cyan));
-  color: #0b1020;
+  color: #022c22;
   border-color: transparent;
 }
 .list {

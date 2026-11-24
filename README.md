@@ -1,6 +1,8 @@
 # Dash4 — QG (maquette « jeu vidéo »)
 
-Maquette de l'interface de Dash4 façon jeu vidéo, **branchée en lecture seule** sur les vraies données de `dash4-api`. Elle sert à valider le style avant de le reporter dans `dash4-web` et `dash4-mobile`.
+Interface de Dash4 façon jeu vidéo, branchée sur les vraies données de `dash4-api`, **avec les mêmes accès que dash4-web** (même menu, mêmes permissions, comptes gestionnaires). On y travaille en parallèle de dash4-web pour valider le style avant de le reporter dans `dash4-web` et `dash4-mobile`. Couleurs : la palette de dash4-web (émeraude, zinc, sky, orange, rouge, violet), en plus lumineux.
+
+Les écrans pas encore refaits ouvrent le même écran dans dash4-web (`VITE_DASH4_WEB_URL`, par défaut `https://dash4web.netlify.app`).
 
 | Écran | Données | Esprit « jeu » |
 |---|---|---|
@@ -13,7 +15,7 @@ Maquette de l'interface de Dash4 façon jeu vidéo, **branchée en lecture seule
 
 Le joueur gagne de l'expérience avec ses tâches terminées (calcul seulement, rien n'est enregistré).
 
-Sur ordinateur : barre latérale. Sur téléphone : barre d'onglets en bas.
+Sur ordinateur : barre latérale avec tout le menu de dash4-web. Sur téléphone : barre d'onglets en bas (QG, Chantiers, Missions, Inventaire) et « Menu » pour le reste.
 
 ## Accessibilité
 
@@ -33,5 +35,5 @@ npm test
 ## Mise en place
 
 1. Sur l'API (`.env`) : ajouter l'adresse de la maquette à `FRONTEND_URLS`, par exemple `https://dash4webdemo.netlify.app`, puis `php artisan optimize`.
-2. Dans Dash4 › Utilisateurs : créer un compte gestionnaire avec le profil **Lecture seule**.
+2. Se connecter avec son compte Dash4 habituel (gestionnaire). Pour une démonstration sans risque : un compte au profil **Lecture seule**.
 3. Sur Netlify : nouveau site depuis ce repo (le `netlify.toml` suffit).

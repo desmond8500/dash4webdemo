@@ -6,21 +6,34 @@
  */
 
 :root {
-  --bg: #0b1020;
-  --bg-2: #111832;
-  --panel: rgb(20 28 58 / 0.78);
-  --panel-solid: #141c3a;
-  --border: rgb(120 140 255 / 0.22);
-  --text: #eef2ff;
-  --muted: #a5b0d6;
-  --cyan: #22d3ee;
-  --violet: #a78bfa;
-  --gold: #fbbf24;
-  --green: #34d399;
-  --red: #f87171;
-  --orange: #fb923c;
+  /*
+   * Palette de dash4-web (thème Aura de PrimeVue : émeraude en couleur principale, gris zinc pour les
+   * surfaces, sky / orange / rouge / violet pour info, attention, danger, aide), en plus lumineux :
+   * nuances 300-400 sur fond très sombre, bordures et halos plus marqués.
+   */
+  --primary: #34d399; /* emerald-400 */
+  --primary-strong: #10b981; /* emerald-500, primaire de dash4-web */
+  --primary-soft: #6ee7b7; /* emerald-300 */
+  --info: #38bdf8; /* sky-400 */
+  --amber: #fbbf24; /* amber-400 */
+  --help: #c084fc; /* purple-400 */
+  --green: #4ade80; /* green-400 (succès) */
+  --orange: #fb923c; /* orange-400 (attention) */
+  --red: #f87171; /* red-400 (danger) */
   --pink: #f472b6;
-  --glow: 0 0 0 1px var(--border), 0 10px 30px rgb(0 0 0 / 0.35);
+  /* Anciens noms, gardés pour les composants */
+  --cyan: var(--primary);
+  --violet: var(--help);
+  --gold: var(--amber);
+
+  --bg: #09090b; /* zinc-950 */
+  --bg-2: #18181b; /* zinc-900 */
+  --panel: rgb(24 24 27 / 0.88);
+  --panel-solid: #18181b;
+  --border: rgb(161 161 170 / 0.32); /* zinc-400 */
+  --text: #fafafa; /* zinc-50 */
+  --muted: #d4d4d8; /* zinc-300 : plus lisible que le gris de dash4-web */
+  --glow: 0 0 0 1px var(--border), 0 0 22px rgb(52 211 153 / 0.12), 0 12px 32px rgb(0 0 0 / 0.45);
   --radius: 16px;
   --text-scale: 1;
   --ease: cubic-bezier(0.2, 0.8, 0.2, 1);
@@ -37,10 +50,11 @@
   --border: #fff;
   --text: #fff;
   --muted: #e5e7eb;
-  --cyan: #67e8f9;
-  --violet: #c4b5fd;
-  --gold: #fde047;
-  --green: #6ee7b7;
+  --primary: #6ee7b7;
+  --info: #7dd3fc;
+  --amber: #fde047;
+  --help: #d8b4fe;
+  --green: #86efac;
   --red: #fca5a5;
   --glow: 0 0 0 2px #fff;
 }
@@ -62,8 +76,8 @@ body,
 
 body {
   background:
-    radial-gradient(1200px 600px at 10% -10%, rgb(34 211 238 / 0.18), transparent 60%),
-    radial-gradient(900px 500px at 110% 10%, rgb(167 139 250 / 0.2), transparent 60%),
+    radial-gradient(1200px 600px at 10% -10%, rgb(16 185 129 / 0.28), transparent 60%),
+    radial-gradient(900px 500px at 110% 10%, rgb(56 189 248 / 0.18), transparent 60%),
     linear-gradient(180deg, var(--bg-2), var(--bg));
   background-attachment: fixed;
   color: var(--text);
@@ -160,10 +174,10 @@ h3 {
 .tile:hover,
 .tile:focus-within {
   transform: translateY(calc(-4px * var(--speed)));
-  border-color: var(--accent, var(--cyan));
+  border-color: var(--accent, var(--primary));
   box-shadow:
-    0 0 0 1px var(--accent, var(--cyan)),
-    0 0 24px color-mix(in srgb, var(--accent, var(--cyan)) 45%, transparent),
+    0 0 0 1px var(--accent, var(--primary)),
+    0 0 28px color-mix(in srgb, var(--accent, var(--primary)) 55%, transparent),
     0 16px 32px rgb(0 0 0 / 0.4);
 }
 .tile:hover::before {
@@ -185,9 +199,9 @@ h3 {
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.03em;
-  background: color-mix(in srgb, var(--tone, var(--cyan)) 18%, transparent);
-  color: var(--tone, var(--cyan));
-  border: 1px solid color-mix(in srgb, var(--tone, var(--cyan)) 50%, transparent);
+  background: color-mix(in srgb, var(--tone, var(--primary)) 26%, transparent);
+  color: color-mix(in srgb, var(--tone, var(--primary)) 80%, #fff);
+  border: 1px solid color-mix(in srgb, var(--tone, var(--primary)) 70%, transparent);
 }
 
 .btn {
@@ -207,14 +221,14 @@ h3 {
   transition: transform calc(0.15s * var(--speed)), box-shadow calc(0.15s * var(--speed));
 }
 .btn:hover {
-  box-shadow: 0 0 18px rgb(34 211 238 / 0.35);
+  box-shadow: 0 0 18px rgb(52 211 153 / 0.45);
 }
 .btn:active {
   transform: scale(calc(1 - 0.04 * var(--speed)));
 }
 .btn.primary {
-  background: linear-gradient(135deg, var(--cyan), var(--violet));
-  color: #0b1020;
+  background: linear-gradient(135deg, var(--primary-soft), var(--primary-strong));
+  color: #022c22; /* emerald-950 */
   border: none;
 }
 
@@ -224,7 +238,7 @@ h3 {
   padding: 0.75rem 1rem;
   border-radius: 12px;
   border: 1px solid var(--border);
-  background: rgb(0 0 0 / 0.35);
+  background: rgb(0 0 0 / 0.45);
   color: var(--text);
   font: inherit;
 }
@@ -295,7 +309,7 @@ h3 {
 }
 .page-title .icon {
   font-size: 2rem;
-  filter: drop-shadow(0 0 10px var(--accent, var(--cyan)));
+  filter: drop-shadow(0 0 12px var(--accent, var(--primary)));
 }
 .page-title h1 {
   font-size: 1.6rem;

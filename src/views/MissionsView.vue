@@ -141,8 +141,8 @@ const dueText = (t: Task) => (t.due_date ? new Date(t.due_date).toLocaleDateStri
   place-items: center;
   font-size: 0.7rem;
   font-weight: 800;
-  background: linear-gradient(135deg, var(--violet), var(--cyan));
-  color: #0b1020;
+  background: linear-gradient(135deg, var(--primary-soft), var(--info));
+  color: #022c22;
   border: 2px solid var(--panel-solid);
   margin-left: -6px;
 }

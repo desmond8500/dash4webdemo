@@ -61,7 +61,7 @@ const kindIcon = (k: string) => (k === 'scooter' || k === 'motorcycle' ? '🛵' 
   display: grid;
   place-items: center;
   font-size: 4rem;
-  background: linear-gradient(135deg, rgb(244 114 182 / 0.25), rgb(34 211 238 / 0.2));
+  background: linear-gradient(135deg, rgb(244 114 182 / 0.25), rgb(56 189 248 / 0.22));
 }
 .photo img {
   width: 100%;
